@@ -1,0 +1,10 @@
+// NEEDS UPDATING, WONT WORK AS IS
+CC = nvcc
+
+all: clean imageProcessing
+
+imageProcessing: imageProcessing.cu imageHandling.cu imageOperations.cu imageAlgebra.cu
+	$(CC) $^ -o $@ -lcudart -lcublas -lcusolver
+
+clean:
+	rm -f *.o
