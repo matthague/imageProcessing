@@ -1,5 +1,4 @@
-# imageProcessing
-Survey of Image Processing Techniques
+# imageProcessing | Survey of Image Denoising Techniques
 
 Howdy! If you're reading this it means that you've stumbled across a bit of code that I've written as a class project.
 
