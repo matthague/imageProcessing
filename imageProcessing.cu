@@ -1,6 +1,6 @@
 /*
     LICENCE NOTICE
-    imageProcessing | A program for image denoising experimentation.
+    imageProcessing | A program for image denoising experiments.
     Copyright (C) 2021  Matt Hague
 
     This program is free software: you can redistribute it and/or modify
