@@ -35,6 +35,7 @@ __global__ void lowPassKernel(cufftDoubleComplex *complexImage, int width, int h
     }
 }
 
+// performs a low pass filter on an image
 void imageFilters::fourierLowPass(double **pixelArrays, int width, int height, int depth, float cutoff) {
     int blockSize = THREADS_PER_BLOCK;
     int numBlocks = ((width * height) + blockSize - 1) / blockSize;
@@ -126,6 +127,7 @@ __global__ void medianKernel(double *inputImage, double *outputImage, int width,
     }
 }
 
+// performs a median filter by setting the current pixel to the median of it's neighbors
 void imageFilters::median(double **pixelArrays, int width, int height, int depth, int passes) {
     // kernel launch parameters
     int blockSize = THREADS_PER_BLOCK;

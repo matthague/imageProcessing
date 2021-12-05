@@ -4,7 +4,7 @@
 #define THREADS_PER_BLOCK 32
 #define STABILITY_EPSILON 0.01
 
-// the famous fast inverse sqrt algorithm from the game Quake, adapted for doubles and cuda
+// the fast inverse sqrt algorithm adapted for doubles and cuda
 // https://en.wikipedia.org/wiki/Fast_inverse_square_root
 __device__ double fast_inverse_sqrt(double number) {
     uint64_t i;
@@ -22,16 +22,18 @@ __device__ double fast_inverse_sqrt(double number) {
     return y;
 }
 
-// adding epsilon avoids a numerical singularity
+// calculates the element-wise inverse square root of a cube
+// result[i] = 1/((a[i]^3)^.5)
 __global__ void inverse_three_halves(double *result, double *a, double epsilon, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < width * height) {
-        double f = a[idx] + epsilon;
-        f = f * f * f; // cube
-        result[idx] = fast_inverse_sqrt(f);
+        double f = a[idx] + epsilon; // adding epsilon avoids a numerical singularity
+        f = f * f * f; // cube step
+        result[idx] = fast_inverse_sqrt(f); // inverse square root step
     }
 }
 
+// calculates centered difference approximation to second partial derivative of u with respect to x
 __global__ void calc_ux(double *u_x, double *u, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < width * height) {
@@ -54,6 +56,7 @@ __global__ void calc_ux(double *u_x, double *u, int width, int height) {
     }
 }
 
+// calculates centered difference approximation to partial derivative of u with respect to y
 __global__ void calc_uy(double *u_y, double *u, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < width * height) {
@@ -77,6 +80,7 @@ __global__ void calc_uy(double *u_y, double *u, int width, int height) {
     }
 }
 
+// calculates centered difference approximation to second partial derivative of u with respect to x
 __global__ void calc_uxx(double *u_xx, double *u, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < width * height) {
@@ -100,6 +104,7 @@ __global__ void calc_uxx(double *u_xx, double *u, int width, int height) {
     }
 }
 
+// calculates centered difference approximation to second partial derivative of u with respect to y
 __global__ void calc_uyy(double *u_yy, double *u, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < width * height) {
@@ -124,6 +129,7 @@ __global__ void calc_uyy(double *u_yy, double *u, int width, int height) {
     }
 }
 
+// calculates result[i] = (s1 * a[i]) + (s2 * b[i]) for valid i
 __global__ void scaledMatrixSum(double *result, double *a, double *b, double s1, double s2, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < width * height) {
@@ -131,6 +137,7 @@ __global__ void scaledMatrixSum(double *result, double *a, double *b, double s1,
     }
 }
 
+// calculates result[i] = scalar * a[i] * b[i] for valid i
 __global__ void
 scaledMultiplyMatrixEntries(double *result, double *a, double *b, double scalar, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
@@ -139,6 +146,7 @@ scaledMultiplyMatrixEntries(double *result, double *a, double *b, double scalar,
     }
 }
 
+// performs variational diffusion on an image
 void imageVariationalMethods::diffusion(double **pixelArrays, int width, int height, int depth, double deltaTime,
                                         double lambda, int numSteps) {
     int totalThreads = width * height;
@@ -198,6 +206,7 @@ void imageVariationalMethods::diffusion(double **pixelArrays, int width, int hei
     cudaFree(u_yy);
 }
 
+// performs a total variational reduction on an image
 void imageVariationalMethods::total(double **pixelArrays, int width, int height, int depth, double deltaTime,
                                     double lambda, int numSteps) {
     int totalThreads = width * height;

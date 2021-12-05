@@ -12,7 +12,7 @@
 __global__ void initRNGKernel(curandState *state, int seed, int maxIndex) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < maxIndex) {
-        curand_init(seed, idx, 0, &state[idx]); // this is a VERY slow step
+        curand_init(seed, idx, 0, &state[idx]); // seeding is a VERY slow step
     }
 }
 
@@ -30,6 +30,7 @@ __global__ void addGaussianNoiseKernel(double *pixelArray, curandState *state, d
     }
 }
 
+// adds white gaussian noise to an image
 void imageOperations::addGaussianNoise(double **pixelArrays, curandState *rngState, int width, int height, int depth,
                                        double noiseStdev) {
     int totalThreads = width * height;
@@ -63,6 +64,7 @@ __global__ void addSANDPNoiseKernel(double *pixelArray, curandState *state, doub
     }
 }
 
+// adds salt and pepper noise to an image
 void imageOperations::addSANDPNoise(double **pixelArrays, curandState *rngState, int width, int height, int depth,
                                     double noiseRate) {
     int totalThreads = width * height;
@@ -112,6 +114,7 @@ __global__ void sumReduce(double *array, int activeElements, int maxIndex) {
     }
 }
 
+// computes the mean squared error of an image from a target image
 double imageOperations::computeMSE(double **pixelArraysA, double **pixelArraysB, int width, int height, int depth) {
     int totalThreads = width * height;
     int blockSize = THREADS_PER_BLOCK;
@@ -171,6 +174,7 @@ double imageOperations::computeMSE(double **pixelArraysA, double **pixelArraysB,
     return result;
 }
 
+// computes the peak signal to noise ratio
 double imageOperations::computePSNR(double mse) {
     if (mse == 0.0) {
         return 100.0;
@@ -179,6 +183,7 @@ double imageOperations::computePSNR(double mse) {
     return psnr;
 }
 
+// computes the mean of a list of pixel value
 double imageOperations::computeMean(double **pixelArrays, int width, int height, int depth) {
     int totalElements = width * height; // total elements per color plane
 
@@ -230,6 +235,7 @@ __global__ void squaredDifferenceSimpleKernel(double *pixelArray, double mean, i
     }
 }
 
+// computes variance of a list of pixel values
 double imageOperations::computeVariance(double **pixelArrays, double mean, int width, int height, int depth) {
     int totalThreads = width * height;
     int blockSize = THREADS_PER_BLOCK;
@@ -290,6 +296,7 @@ covarianceKernel(double *pixelArrayA, double *pixelArrayB, double *deltaArray, d
     }
 }
 
+// computes pearson covariance
 double
 imageOperations::computeCovariance(double **pixelArraysA, double **pixelArraysB, double meanA, double meanB, int width,
                                    int height, int depth) {
@@ -351,6 +358,7 @@ imageOperations::computeCovariance(double **pixelArraysA, double **pixelArraysB,
     return result;
 }
 
+// computes structure similarity index measure
 double imageOperations::computeSSIM(double **pixelArraysA, double **pixelArraysB, int width, int height, int depth) {
     double meanA = imageOperations::computeMean(pixelArraysA, width, height, depth);
     double meanB = imageOperations::computeMean(pixelArraysB, width, height, depth);

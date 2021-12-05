@@ -15,6 +15,9 @@ void imageHandling::loadImage(FILE *file, double **pixelArrays, int width, int h
         for (int i = 0; i < depth; i++) {
             double tval;
             fscanf(file, "%lf", &tval);
+            if (feof(file)) {
+                break;
+            }
             pixelArrays[i][offset] = tval;
         }
         offset += 1;

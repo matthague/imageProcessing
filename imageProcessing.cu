@@ -58,7 +58,7 @@ void printModes() {
 
     printf("Processing modes:\n");
     printf("\t0: NULL - Does nothing.\n");
-    printf("\t1: Grayscale - A mode for debugging. No options.\n");
+    printf("\t1: Grayscale - An intermediate mode for debugging. No options.\n");
     printf("\t2: SVD - Performs a singular value decomposition approximation, keeping the first <lambda1> fraction of singular values.\n");
     printf("\t3: Fourier Low Pass - Performs a radial low pass filter on the 2d transform of the image, using parameter <lambda1> for radius. Increasing the radius means that the image will be represented by lower frequencies.\n");
     printf("\t4: Median - Performs a 3x3 sliding window median filter on the image, using parameter <lambda1> for the number of filter passes. <lambda1> should be a positive integer.\n");
@@ -281,7 +281,7 @@ int main(int argc, char *argv[]) {
 
     int width; // image width
     int height; // image height
-    int depth; // number of color planes [e.g. RGBA]
+    int depth; // number of color planes [e.g. 4 for RGBA]
     imageHandling::getImageDimensions(inputFile, &width, &height, &depth);
 
     double **inputPixelArrays; // pointers to arrays that hold pixel data
@@ -292,7 +292,7 @@ int main(int argc, char *argv[]) {
 
     // set effective depth
     int effectiveDepth = depth;
-    if (NO_ALPHA) {
+    if (NO_ALPHA && (effectiveDepth == 4)) {
         effectiveDepth -= 1;
         cudaMemcpy(outputPixelArrays[depth - 1], inputPixelArrays[depth - 1], width * height * sizeof(double),
                    cudaMemcpyHostToHost);

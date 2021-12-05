@@ -7,6 +7,7 @@
 #include <cublas_v2.h>
 #include <cusolverDn.h>
 
+// calculates k-singular value approximation of an image
 void imageAlgebra::kSVD(double **pixelArrays, int width, int height, int depth, int k) {
     // set up solver handles
     cusolverDnHandle_t cusolverH = NULL;
