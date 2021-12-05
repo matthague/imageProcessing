@@ -60,7 +60,7 @@ void printModes() {
     printf("\t0: NULL - Does nothing.\n");
     printf("\t1: Grayscale - An intermediate mode for debugging. No options.\n");
     printf("\t2: SVD - Performs a singular value decomposition approximation, keeping the first <lambda1> fraction of singular values.\n");
-    printf("\t3: Fourier Low Pass - Performs a radial low pass filter on the 2d transform of the image, using parameter <lambda1> for radius. Increasing the radius means that the image will be represented by lower frequencies.\n");
+    printf("\t3: Fourier Low Pass - Performs a radial low pass filter on the 2d transform of the image, using parameter <lambda1> for radius. Increasing the radius means that the image will be represented by more frequencies.\n");
     printf("\t4: Median - Performs a 3x3 sliding window median filter on the image, using parameter <lambda1> for the number of filter passes. <lambda1> should be a positive integer.\n");
     printf("\t5: Diffusion - Performs a variational diffusion on the image, using parameter <lambda1> for the diffusive regularization parameter. <lambda1> should be a positive float.\n");
     printf("\t6: Total Variation - Performs a total variation minimization on the image, using parameter <lambda1> for the regularization parameter. <lambda1> should be a positive float.\n\n");
@@ -208,6 +208,7 @@ processImage(double **inputPixelArrays, double **outputPixelArrays, int width, i
         // process the image depending on the processingMode
         switch (processingMode) {
             case GRAYSCALE_MODE:
+                // basic grayscale conversion
                 for (int j = 0; j < height; j++) {
                     for (int i = 0; i < width; i++) {
                         double avg = outputPixelArrays[0][j * width + i] + outputPixelArrays[1][j * width + i] +
