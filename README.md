@@ -19,6 +19,16 @@ Python scripts are included to extract(pixelExtractor) images into a .pxa (pixel
 
 Good luck. Hopefully this code is ~helpful~ *useful* to you.
 
+# Building the code
+cmake version 3.21 or later is required to build the code for this project. If you are in the Vocareum enviroment, a MANUALMakefile has been provided, and should be used. To install the required Python 3 packages, and compile the main code with cmake run the following:
+```
+cd /folder/containing/CMakeLists.txt/
+pip install -r requirements.txt # may need to be pip3 
+cmake .
+make -j
+```
+Ta da! Hopefully everything built correctly. 
+
 # Demo usage and examples
 
 If you need to convert an image to .pxa format, you can do `python3 pixelExtractor filename.format` to get a `filename.pxa` file. I recommend using smaller images (up to 400x400), as some methods have complexity O(n^3).
