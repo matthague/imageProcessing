@@ -25,13 +25,17 @@ cmake version 3.21 or later is required to build the code for this project. If y
 ```
 cd /folder/containing/CMakeLists.txt/
 pip install -r requirements.txt # may need to be pip3 
-cmake .
+mkdir build
+cd build
+cmake ..
 make -j
 ```
 Ta da! Hopefully everything built correctly. 
 
 If you are on Vocareum, running a simple:
 ```
+cd /folder/containing/CMakeLists.txt/
+pip install -r requirements.txt # may need to be pip3 
 mv MANUALMakefile Makefile
 make all
 ```
