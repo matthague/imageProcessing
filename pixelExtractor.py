@@ -23,4 +23,7 @@ def extractPixelData(inputfile):
 
 
 if __name__ == "__main__":
+    if(len(sys.argv) != 2):
+        print("Usage: python3 pixelExtractor <input_file_name.png>")
+        exit()
     extractPixelData(sys.argv[1])
