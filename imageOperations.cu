@@ -196,7 +196,7 @@ double imageOperations::computeMean(double **pixelArrays, int width, int height,
     for (int colorPlane = 0; colorPlane < depth; colorPlane++) {
         cudaMemcpy(devicePixelArray, pixelArrays[colorPlane], totalElements * sizeof(double), cudaMemcpyHostToDevice);
 
-        // increase active as a power of 2 until it is larger than totalElements
+        // increase activeElements as a power of 2 until it is larger than totalElements
         int activeElements = 1;
         while (activeElements <= totalElements) {
             activeElements = activeElements << 1;
@@ -345,7 +345,7 @@ imageOperations::computeCovariance(double **pixelArraysA, double **pixelArraysB,
         double accumulator;
         cudaMemcpy(&accumulator, devicePixelArrayDelta, 1 * sizeof(double), cudaMemcpyDeviceToHost);
 
-        // add MSE to the result
+        // add plane MSE to the result
         result += accumulator;
     }
 

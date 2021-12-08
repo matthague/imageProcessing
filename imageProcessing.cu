@@ -189,6 +189,7 @@ processImage(double **inputPixelArrays, double **outputPixelArrays, int width, i
                        cudaMemcpyHostToHost);
         }
 
+        // add artificial noise to the image
         switch (noiseMode) {
             case GAUSSIAN_NOISE_MODE:
                 imageOperations::addGaussianNoise(outputPixelArrays, rngState, width, height, depth, noiseRate);
@@ -205,7 +206,7 @@ processImage(double **inputPixelArrays, double **outputPixelArrays, int width, i
         // additional variables used in some processing modes
         int k;
 
-        // process the image depending on the processingMode
+        // denoise the image
         switch (processingMode) {
             case GRAYSCALE_MODE:
                 // basic grayscale conversion
@@ -246,7 +247,7 @@ processImage(double **inputPixelArrays, double **outputPixelArrays, int width, i
                 break;
         }
 
-        // accumulate correction statistics to compute averages over numIterations
+        // accumulate statistics to get average
         double mse = imageOperations::computeMSE(inputPixelArrays, outputPixelArrays, width, height, depth);
         double ssim = imageOperations::computeSSIM(inputPixelArrays, outputPixelArrays, width, height, depth);
         averageMSE += mse / numIterations;
@@ -267,6 +268,7 @@ processImage(double **inputPixelArrays, double **outputPixelArrays, int width, i
 }
 
 int main(int argc, char *argv[]) {
+    // parse arguments
     FILE *inputFile;
     FILE *outputFile;
     int noiseMode;
@@ -280,6 +282,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // load image
     int width; // image width
     int height; // image height
     int depth; // number of color planes [e.g. 4 for RGBA]

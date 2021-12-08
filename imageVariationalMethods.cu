@@ -22,7 +22,7 @@ __device__ double fast_inverse_sqrt(double number) {
     return y;
 }
 
-// calculates the element-wise inverse square root of a cube
+// calculates the element-wise inverse square root of a cubed entry
 // result[i] = 1/((a[i]^3)^.5)
 __global__ void inverse_three_halves(double *result, double *a, double epsilon, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
@@ -33,7 +33,7 @@ __global__ void inverse_three_halves(double *result, double *a, double epsilon, 
     }
 }
 
-// calculates centered difference approximation to second partial derivative of u with respect to x
+// calculates centered difference approximation to partial derivative of u with respect to x
 __global__ void calc_ux(double *u_x, double *u, int width, int height) {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
     if (idx < width * height) {
@@ -146,7 +146,7 @@ scaledMultiplyMatrixEntries(double *result, double *a, double *b, double scalar,
     }
 }
 
-// performs variational diffusion on an image
+// performs in-place variational diffusion on an image
 void imageVariationalMethods::diffusion(double **pixelArrays, int width, int height, int depth, double deltaTime,
                                         double lambda, int numSteps) {
     int totalThreads = width * height;
@@ -189,7 +189,7 @@ void imageVariationalMethods::diffusion(double **pixelArrays, int width, int hei
             scaledMatrixSum<<<numBlocks, blockSize>>>(u_t, u_curr, u_t, -1.0, 1.0, width, height);
             cudaDeviceSynchronize();
 
-            // u_curr = deltat * u_t + u_curr
+            // u_curr = deltat * u_t + u_curr (euler's method)
             scaledMatrixSum<<<numBlocks, blockSize>>>(u_curr, u_t, u_curr, deltaTime, 1.0, width, height);
             cudaDeviceSynchronize();
         }
@@ -206,7 +206,7 @@ void imageVariationalMethods::diffusion(double **pixelArrays, int width, int hei
     cudaFree(u_yy);
 }
 
-// performs a total variational reduction on an image
+// performs a in-place total variation reduction on an image
 void imageVariationalMethods::total(double **pixelArrays, int width, int height, int depth, double deltaTime,
                                     double lambda, int numSteps) {
     int totalThreads = width * height;
@@ -293,7 +293,7 @@ void imageVariationalMethods::total(double **pixelArrays, int width, int height,
             scaledMatrixSum<<<numBlocks, blockSize>>>(u_t, u_x, u_y, 1.0, 1.0, width, height);
             cudaDeviceSynchronize();
 
-            // u_curr = deltat*u_t + u_curr
+            // u_curr = deltat*u_t + u_curr (euler's method)
             scaledMatrixSum<<<numBlocks, blockSize>>>(u_curr, u_t, u_curr, deltaTime, 1.0, width, height);
             cudaDeviceSynchronize();
         }

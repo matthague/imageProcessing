@@ -3,12 +3,14 @@
 #include <iostream>
 #include <stdio.h>
 
+// get dimensions from a .pxa file
 void imageHandling::getImageDimensions(FILE *file, int *width, int *height, int *depth) {
     fscanf(file, "%d", width);
     fscanf(file, "%d", height);
     fscanf(file, "%d", depth);
 }
 
+// load an image from a .pxa file
 void imageHandling::loadImage(FILE *file, double **pixelArrays, int width, int height, int depth) {
     int offset = 0;
     while (!feof(file)) {
@@ -22,10 +24,10 @@ void imageHandling::loadImage(FILE *file, double **pixelArrays, int width, int h
         }
         offset += 1;
     }
-
     fclose(file);
 }
 
+// save an image in .pxa format
 void imageHandling::saveImage(FILE *outputFile, double **pixelArrays, int width, int height, int depth) {
     fprintf(outputFile, "%d\n", width);
     fprintf(outputFile, "%d\n", height);
@@ -46,10 +48,10 @@ void imageHandling::saveImage(FILE *outputFile, double **pixelArrays, int width,
         }
         fprintf(outputFile, "\n");
     }
-
     fclose(outputFile);
 }
 
+// allocate space for pixel arrays
 double **imageHandling::allocateImage(int depth, int width, int height) {
     double **pixelArrays;
     cudaMallocHost(&pixelArrays, depth * sizeof(*pixelArrays));
@@ -61,10 +63,10 @@ double **imageHandling::allocateImage(int depth, int width, int height) {
     return pixelArrays;
 }
 
+// free pixel arrays
 void imageHandling::freeImage(double **pixelArrays, int depth) {
     for (int i = 0; i < depth; i++) {
         cudaFreeHost(pixelArrays[i]);
     }
-
     cudaFreeHost(pixelArrays);
 }
