@@ -1,7 +1,7 @@
 CC = nvcc
 all: clean imageProcessing
 
-imageProcessing: imageProcessing.cu imageHandling.cu imageOperations.cu imageOperations.cuh imageAlgebra.cu imageFilters.cu imageVariationalMethods.cu
+imageProcessing: imageProcessing.cu imageHandling.cu imageOperations.cu imageAlgebra.cu imageFilters.cu imageVariationalMethods.cu
 	$(CC) $^ -o $@ -lcudart -lcublas -lcusolver -lcufft
 
 clean:
