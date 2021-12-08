@@ -23,7 +23,7 @@ Good luck. Hopefully this code is ~helpful~ *useful* to you.
 # Building the code
 cmake version 3.21 or later is required to build the code for this project. If you are in the Vocareum enviroment, a MANUALMakefile has been provided, and should be used. To install the required Python 3 packages, and compile the main code with cmake run the following:
 ```
-cd /folder/containing/CMakeLists.txt/
+cd /.../.../imageProcessing/
 pip install -r requirements.txt # may need to be pip3 
 mkdir build
 cd build
@@ -34,7 +34,7 @@ Ta da! Hopefully everything built correctly.
 
 If you are on Vocareum, running a simple:
 ```
-cd /folder/containing/CMakeLists.txt/
+cd /.../.../imageProcessing/
 pip install -r requirements.txt # may need to be pip3 
 mv MANUALMakefile Makefile
 make all
