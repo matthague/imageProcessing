@@ -28,6 +28,6 @@ def compressPixelData(inputfile, output):
 
 if __name__ == "__main__":
     if(len(sys.argv) != 3):
-        print("Usage: python3 pixelCompressor  <input_file_name.out> <output_file_name.png>")
+        print("Usage: python3 pixelCompressor <input_file_name.out> <output_file_name.png>")
         exit()
     compressPixelData(sys.argv[1], sys.argv[2])
