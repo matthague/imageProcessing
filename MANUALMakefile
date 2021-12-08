@@ -3,8 +3,8 @@ CC = nvcc
 
 all: clean imageProcessing
 
-imageProcessing: imageProcessing.cu imageHandling.cu imageOperations.cu imageAlgebra.cu
-	$(CC) $^ -o $@ -lcudart -lcublas -lcusolver
+imageProcessing: imageProcessing.cu imageHandling.cu imageHandling.cuh imageOperations.cu imageOperations.cuh imageAlgebra.cu imageAlgebra.cuh imageFilters.cu imageFilters.cuh imageVariationalMethods.cu imageVariationalMethods.cuh
+	$(CC) $^ -o $@ -lcudart -lcublas -lcusolver -lcufft
 
 clean:
 	rm -f *.o
