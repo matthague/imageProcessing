@@ -2,8 +2,9 @@
 
 Howdy! If you're reading this it means that you've stumbled across a bit of code that I've written as a class project.
 
-The code in this repo is designed to perform a variety of image denoising techniques in CUDA. The code should be built using CMAKE,
-but a manual makefile is also included for those that don't mind specifying include paths manually.
+The code in this repo is designed to perform a variety of image denoising techniques in CUDA. This code is intended to add noise to clean base images, and then remove it using some of the included methods--however, it can be used on images without adding noise by setting the <noise_rate> paramater to 0. 
+
+The code should be built using cmake, but a manual makefile is also included for those on Vocareum.
 
 The primary built target is called imageProcessing, and it contains a few methods that
 * add additive white gaussian noise
@@ -24,10 +25,21 @@ cmake version 3.21 or later is required to build the code for this project. If y
 ```
 cd /folder/containing/CMakeLists.txt/
 pip install -r requirements.txt # may need to be pip3 
-cmake .
+mkdir build
+cd build
+cmake ..
 make -j
 ```
 Ta da! Hopefully everything built correctly. 
+
+If you are on Vocareum, running a simple:
+```
+cd /folder/containing/CMakeLists.txt/
+pip install -r requirements.txt # may need to be pip3 
+mv MANUALMakefile Makefile
+make all
+```
+Should do the trick.
 
 # Demo usage and examples
 
