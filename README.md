@@ -37,7 +37,7 @@ If you are on Vocareum, running a simple:
 cd /.../.../imageProcessing/
 pip install -r requirements.txt # may need to be pip3 (NOTE: vocareum should already have the python packages installed, should be okay if this fails)
 mv MANUALMakefile Makefile
-make all
+make -j
 ```
 Should do the trick.
 
