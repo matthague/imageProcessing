@@ -35,7 +35,7 @@ Ta da! Hopefully everything built correctly.
 If you are on Vocareum, running a simple:
 ```
 cd /.../.../imageProcessing/
-pip install -r requirements.txt # may need to be pip3 
+pip install -r requirements.txt # may need to be pip3 (vocareum should already have the python packages installed)
 mv MANUALMakefile Makefile
 make all
 ```
