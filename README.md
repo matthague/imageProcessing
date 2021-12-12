@@ -47,7 +47,7 @@ I recommend using only smaller images (up to 400x400), as it can be tricky to se
 
 **If you do not have a testing image--images/camera.png, images/butterfly.png, images/moon.png, or images/barn.png--can be used by copying them to your working/build directory.**
 
-If you need to convert an image to .pxa format, you can do `python3 pixelExtractor.py inputfilename.png` to get a `inputfilename.pxa` file. Note: Most file formats are supported via the Python Image Library (PIL), so you can use .jpeg, .png, etc.
+If you need to convert an image to .pxa format, you can run `python3 pixelExtractor.py inputfilename.png` to get a `inputfilename.pxa` file. Note: Most file formats are supported via the Python Image Library (PIL), so you can use .jpeg, .png, etc.
 
 To just add additive white gaussian noise w/ std. deviation 20
 ```./imageProcessing inputfilename.pxa outputfilename.out 1 0 20```
