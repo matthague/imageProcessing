@@ -43,7 +43,9 @@ Should do the trick.
 
 # Demo usage and examples
 
-If you need to convert an image to .pxa format, you can do `python3 pixelExtractor filename.format` to get a `filename.pxa` file. I recommend using smaller images (up to 400x400), as some methods have complexity O(n^3).
+If you need to convert an image to .pxa format, you can do `python3 pixelExtractor filename.format` to get a `filename.pxa` file. I recommend using only smaller images (up to 400x400), as some methods have complexity O(n^3).
+
+**If you do not have a testing image, images/demo_resources/balloon.png can be used. An extracted version of this image is also provided in images/demo_resources/balloon.pxa.**
 
 To just add additive white gaussian noise w/ std. deviation 20
 ```./imageProcessing filename.pxa filename.out 1 0 20```
