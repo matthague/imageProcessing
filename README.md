@@ -43,9 +43,9 @@ Should do the trick.
 
 # Demo usage and examples
 
-If you need to convert an image to .pxa format, you can do `python3 pixelExtractor filename.format` to get a `filename.pxa` file. I recommend using only smaller images (up to 400x400), as some methods have complexity O(n^3).
+**If you do not have a testing image, images/balloon.png, images/camera.png, images/butterfly.png, images/moon.png, or images/barn.png can be used by copying them to your working/build directory.**
 
-**If you do not have a testing image, images/balloon.png can be used.**
+If you need to convert an image to .pxa format, you can do `python3 pixelExtractor.py filename.png` to get a `filename.pxa` file. I recommend using only smaller images (up to 400x400), as some methods have complexity O(n^3). Note: Most file formats are supported via the Python Image Library (PIL), so you can use .jpeg, .png, etc.
 
 To just add additive white gaussian noise w/ std. deviation 20
 ```./imageProcessing filename.pxa filename.out 1 0 20```
@@ -67,4 +67,4 @@ To perform a median filter on an image with salt and pepper noise w/ rate 30 usi
 
 ![median](https://user-images.githubusercontent.com/33411204/144759646-2ee40db5-6085-4739-96e9-dc5c5c98b79f.png)
 
-To view the processed images you can use `python3 pixelCompressor filename.out filename.png` to get a finished image.
+To view the processed images you can use `python3 pixelCompressor.py filename.out filename.png` to get a finished image.
