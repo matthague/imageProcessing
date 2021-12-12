@@ -43,7 +43,7 @@ Should do the trick.
 
 # Demo usage and examples
 
-**If you do not have a testing image, images/balloon.png, images/camera.png, images/butterfly.png, images/moon.png, or images/barn.png can be used by copying them to your working/build directory.**
+**If you do not have a testing image images/camera.png, images/butterfly.png, images/moon.png, or images/barn.png can be used by copying them to your working/build directory.**
 
 If you need to convert an image to .pxa format, you can do `python3 pixelExtractor.py filename.png` to get a `filename.pxa` file. I recommend using only smaller images (up to 400x400), as some methods have complexity O(n^3). Note: Most file formats are supported via the Python Image Library (PIL), so you can use .jpeg, .png, etc.
 
