@@ -35,7 +35,7 @@ Ta da! Hopefully everything built correctly.
 If you are on Vocareum, running a simple:
 ```
 cd /.../.../imageProcessing/
-pip install -r requirements.txt # may need to be pip3 (vocareum should already have the python packages installed)
+pip install -r requirements.txt # may need to be pip3 (NOTE: vocareum should already have the python packages installed, should be okay if this fails)
 mv MANUALMakefile Makefile
 make all
 ```
@@ -43,28 +43,30 @@ Should do the trick.
 
 # Demo usage and examples
 
-**If you do not have a testing image images/camera.png, images/butterfly.png, images/moon.png, or images/barn.png can be used by copying them to your working/build directory.**
+I recommend using only smaller images (up to 400x400), as it can be tricky to see the effects with lots and lots of pixels.
 
-If you need to convert an image to .pxa format, you can do `python3 pixelExtractor.py filename.png` to get a `filename.pxa` file. I recommend using only smaller images (up to 400x400), as some methods have complexity O(n^3). Note: Most file formats are supported via the Python Image Library (PIL), so you can use .jpeg, .png, etc.
+**If you do not have a testing image--images/camera.png, images/butterfly.png, images/moon.png, or images/barn.png--can be used by copying them to your working/build directory.**
+
+If you need to convert an image to .pxa format, you can do `python3 pixelExtractor.py inputfilename.png` to get a `inputfilename.pxa` file. Note: Most file formats are supported via the Python Image Library (PIL), so you can use .jpeg, .png, etc.
 
 To just add additive white gaussian noise w/ std. deviation 20
-```./imageProcessing filename.pxa filename.out 1 0 20```
+```./imageProcessing inputfilename.pxa outputfilename.out 1 0 20```
 
 ![awgn20](https://user-images.githubusercontent.com/33411204/144759611-1313627b-6958-47b9-8145-b8755b527482.png)
 
 To just add salt and pepper noise w/ rate 30
-```./imageProcessing filename.pxa filename.out 2 0 30```
+```./imageProcessing inputfilename.pxa outputfilename.out 2 0 30```
 
 ![sandp](https://user-images.githubusercontent.com/33411204/144759636-d57a49bf-2012-4114-a79e-cd6c940d7689.png)
 
 To perform total variational reduction on an image with additive white gaussian noise w/ std. deviation 20 using lambda .1
-```./imageProcessing filename.pxa filename.out 1 6 20 .1```
+```./imageProcessing inputfilename.pxa outputfilename.out 1 6 20 .1```
 
 ![tvawgn](https://user-images.githubusercontent.com/33411204/144759625-bc4fb64a-d983-46f4-b606-4283b9097332.png)
 
 To perform a median filter on an image with salt and pepper noise w/ rate 30 using lambda 1
-```./imageProcessing filename.pxa filename.out 2 4 30 1```
+```./imageProcessing inputfilename.pxa outputfilename.out 2 4 30 1```
 
 ![median](https://user-images.githubusercontent.com/33411204/144759646-2ee40db5-6085-4739-96e9-dc5c5c98b79f.png)
 
-To view the processed images you can use `python3 pixelCompressor.py filename.out filename.png` to get a finished image.
+To view the processed images you can use `python3 pixelCompressor.py outputfilename.out outputfilename.png` to get a finished image.
